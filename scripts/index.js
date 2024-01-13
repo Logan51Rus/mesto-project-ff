@@ -13,7 +13,7 @@ function addCard(cardinfo, removeCardCallback) {
     const cardTitle = cardElement.querySelector('.card__title');
 
     cardImage.src = cardinfo.link;
-    cardImage.alt.textContent = 'Живописное место в России';
+    cardImage.alt = cardinfo.name;
     cardTitle.textContent = cardinfo.name;
     
     deleteButton.addEventListener('click', removeCardCallback);
