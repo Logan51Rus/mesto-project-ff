@@ -1,4 +1,4 @@
-function addCard(cardinfo, removeCardCallback, likeCardCallback, openPopupImgCallback) {
+function createCard(cardinfo, removeCardCallback, likeCardCallback, openPopupImgCallback) {
     const cardTemplate = document.getElementById('card-template').content; // Создаём объект с содержимым шаблона 
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true); //Клонируем шаблон
     const deleteButton = cardElement.querySelector('.card__delete-button');
@@ -31,4 +31,4 @@ function likeCard(evt) {
     cardItem.classList.toggle('card__like-button_is-active')
 };
 
-export { addCard, removeCard, likeCard }
+export { createCard, removeCard, likeCard }

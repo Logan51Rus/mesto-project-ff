@@ -1,7 +1,7 @@
 import '../src/pages/index.css';
 import { initialCards } from '../src/components/scripts/cards.js';
-import { addCard, removeCard, likeCard } from '../src/components/scripts/card.js';
-import { openPopupWindow, closePopupWindow, closeOnOverlay, closeOnEscape, clearFormFields } from '../src/components/scripts/modal.js';
+import { createCard, removeCard, likeCard } from '../src/components/scripts/card.js';
+import { openPopupWindow, closePopupWindow, closeOnOverlay, closeOnEscape } from '../src/components/scripts/modal.js';
 
 //  DOM узлы
 const cardsContainer = document.querySelector('.places__list');
@@ -25,7 +25,7 @@ const popupTitle = popupImageContainer.querySelector('.popup__caption');
 
 //Вывод карточек на страницу
 initialCards.forEach((elem) => {
-    cardsContainer.append(addCard(elem, removeCard, likeCard, openPopupImg));
+    cardsContainer.append(createCard(elem, removeCard, likeCard, openPopupImg));
 });
 
 //Функция-обработчик закрытия по клику на кнопку закрытия
@@ -42,7 +42,7 @@ closeButtons.forEach((button) => {
 })
 
 popupsArray.forEach((popup) => {
-    popup.addEventListener('click', closeOnOverlay(popup));
+    popup.addEventListener('click', closeOnOverlay);
 });
     
 editProfileButton.addEventListener('click', function() {
@@ -54,14 +54,15 @@ editProfileButton.addEventListener('click', function() {
 
 addPlaceButton.addEventListener('click', function() {
     openPopupWindow(popupWindowAddPlace);
+    clearFormFields();
 });
 
 // Функция отправки формы
-function handleFormSubmit(evt) {
+function handleAddPlaceForm(evt) {
     evt.preventDefault();
 
-    let nameInputValue = nameInput.value;
-    let jobInputValue = jobInput.value;
+    const nameInputValue = nameInput.value;
+    const jobInputValue = jobInput.value;
 
     let profileName = profileInfo.querySelector('.profile__title');
     let profileDescription = profileInfo.querySelector('.profile__description');
@@ -72,21 +73,27 @@ function handleFormSubmit(evt) {
     closePopupWindow(popupWindowEdit);
 };
 
-popupWindowEdit.addEventListener('submit', handleFormSubmit)
+popupWindowEdit.addEventListener('submit', handleAddPlaceForm);
+
+//Функция очистки полей попапа с созданием новой карточки при её закрытии без сохранения
+function clearFormFields() {
+    placeInfo.value = "";
+    urlInfo.value = "";
+};
 
 // Функция добавления карточки 
 function addNewPlace(evt) {
     evt.preventDefault();
 
-    let placeInfoValue = placeInfo.value;
-    let urlInfoValue = urlInfo.value;
+    const placeInfoValue = placeInfo.value;
+    const urlInfoValue = urlInfo.value;
 
     const newCard = {
         name: placeInfoValue, 
         link: urlInfoValue
     };
 
-    const addNewCard = addCard(newCard, removeCard, likeCard, openPopupImg);
+    const addNewCard = createCard(newCard, removeCard, likeCard, openPopupImg);
 
     cardsContainer.prepend(addNewCard);
 
@@ -108,12 +115,3 @@ function openPopupImg({name, link}) {
   
     openPopupWindow(popupImageContainer)
 };
-
-
-
-
-
-
-
-
-
