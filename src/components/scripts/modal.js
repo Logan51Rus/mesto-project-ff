@@ -13,8 +13,7 @@ function closePopupWindow(popup) {
 //Функция закрытия по клику на Escape
 function closeOnEscape(evt) {
     if (evt.key === 'Escape') {
-        const popupsArray = Array.from(document.querySelectorAll('.popup'));
-        const openedPopup = popupsArray.find(popup => popup.classList.contains('popup_is-opened'));
+        const openedPopup = document.querySelector('.popup_is-opened');
         if (openedPopup) {
             closePopupWindow(openedPopup);
         };
