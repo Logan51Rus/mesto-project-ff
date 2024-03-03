@@ -635,6 +635,19 @@ template {
   margin: 0 29px 0 0;
 }
 
+.profile__image:hover::after {
+  content: "";
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  background-image: url(images/Vector.93c771f5f8582261951d.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+
 @media screen and (max-width: 740px) {
   .profile__image {
     margin: 0 10px 0 0;
@@ -727,6 +740,16 @@ template {
   opacity: 0.6;
 }
 
+.card__like-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px
+}
+.card__like-amount {
+    margin: 0;
+}
 .card__like-button_is-active {
   background: transparent url(images/like-active.a7ffe37dcb927ba0c46c.svg) no-repeat;
 }
@@ -895,6 +918,15 @@ template {
   cursor: pointer;
 }
 
+.popup__button_disabled {
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;
@@ -919,6 +951,9 @@ template {
   display: block;
 }
 
+.form__input-error {
+    color: red;
+}
 .popup {
   font-family: 'Inter', Arial, sans-serif;
   display: none;
