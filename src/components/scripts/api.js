@@ -7,7 +7,7 @@ const config = {
     }
   }
 
-const checkResponseStatus = (res) => {
+function checkResponseStatus(res) {
     if (res.ok) {
         return res.json();
     } else {
@@ -15,53 +15,43 @@ const checkResponseStatus = (res) => {
     }
 }
 
-const getInitialCards = () => {
+function getInitialCards() {
     return fetch(`${config.baseUrl}/cards`, {
       headers: config.headers
     })
-      .then(res => checkResponseStatus(res))
+      .then((res) => checkResponseStatus(res))
 }
 
-const getUserInfo = () => {
+function getUserInfo() {
     return fetch(`${config.baseUrl}/users/me`, {
         headers: config.headers
       })
-      .then(res => checkResponseStatus(res))
+      .then((res) => checkResponseStatus(res))
 }
 
-const getInitialInfo = () => {
-    return Promise.all([getInitialCards(), getUserInfo()]);
-}
-
-const renewUserProfileInfo = (name, about) => {
+function updateUserInfo(name, about) {
     return fetch(`${config.baseUrl}/users/me`, {
-        method: 'PATCH',
-        headers: config.headers,
-        body: JSON.stringify({
-            name: name,
-            about: about
-        }),
-    })
-    .then((res) => {
-        checkResponseStatus(res) 
-    })
-}
+      method: "PATCH",
+      headers: config.headers,
+      body: JSON.stringify({
+        name: name,
+        about: about,
+      }),
+    }).then((res) => checkResponseStatus(res));
+  }
   
-const postNewCard = (cardInfo) => {
+  function postNewCard(name, link) {
     return fetch(`${config.baseUrl}/cards`, {
-        method: 'POST',
-        headers: config.headers,
-        body: JSON.stringify({
-            name: cardInfo.name,
-            link: cardInfo.link
-        })
-      })
-      .then(res => {
-        checkResponseStatus(res)
-      })
-}
+      method: "POST",
+      headers: config.headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    }).then((res) => checkResponseStatus(res));
+  }
 
-const deleteCard = (cardId) => {
+function deleteCard(cardId) {
     return fetch(`${config.baseUrl}/cards/${cardId}`, {
         method: "DELETE",
         headers: config.headers
@@ -71,27 +61,21 @@ const deleteCard = (cardId) => {
       })
 }
 
-const putLike = (cardId) => {
+function likeCard(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: "PUT",
-        headers: config.headers
-    })
-    .then(res => {
-        checkResponseStatus(res)
-      })
-}
-    
-const removeLike = (cardId) => {
+      method: "PUT",
+      headers: config.headers,
+    }).then((res) => checkResponseStatus(res));
+  }
+  
+  function dislikeCard(cardId) {
     return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
-        method: "DELETE",
-        headers: config.headers
-    })
-    .then(res => {
-        checkResponseStatus(res)
-      })
-}
+      method: "DELETE",
+      headers: config.headers,
+    }).then((res) => checkResponseStatus(res));
+  }
 
-const updateProfilePhoto = (avatar) => {
+function updateUserPhoto(avatar) {
     return fetch(`${config.baseUrl}/users/me/avatar`, {
         method: 'PATCH',
         headers: config.headers,
@@ -101,4 +85,4 @@ const updateProfilePhoto = (avatar) => {
     }).then((res) => checkResponseStatus(res))
 }
 
-export {getInitialCards, getUserInfo, getInitialInfo, renewUserProfileInfo, postNewCard, deleteCard, putLike, removeLike, updateProfilePhoto }
+export { getInitialCards, getUserInfo, updateUserInfo, postNewCard, deleteCard, likeCard, dislikeCard, updateUserPhoto }
