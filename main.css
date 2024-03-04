@@ -953,6 +953,9 @@ template {
 
 .form__input-error {
     color: red;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14.5px;
 }
 .popup {
   font-family: 'Inter', Arial, sans-serif;
